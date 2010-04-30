@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>eu.ibacz.k3.liferay.extlet</groupId>
+    <artifactId>extlet-archetype-5.2.3</artifactId>
+    <name>Extlet Archetype for the Liferay Portal 5.2.3</name>
+    <version>2.1.3</version>
+    <url>http://w3.ibacz.cz/confluence/display/KIII/Extlet</url>
+    <packaging>maven-archetype</packaging>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>2.0-alpha-4</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <artifactId>maven-archetype-plugin</artifactId>
+                <version>2.0-alpha-4</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

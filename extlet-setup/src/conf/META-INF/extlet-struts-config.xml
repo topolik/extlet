@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<message-resources parameter="content.Language,content.Language-ext" factory="com.liferay.portal.struts.ExtletMultiMessageResourcesFactory" />
+	<plug-in className="com.liferay.portal.struts.ExtletPortalTilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml,/WEB-INF/tiles-defs-ext.xml,META-INF/extlet-tiles-defs.xml" />
+		<set-property property="factoryClassname" value="com.liferay.portal.struts.ExtletTilesDefinitionsFactory" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>
+</struts-config>

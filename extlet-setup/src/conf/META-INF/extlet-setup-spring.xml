@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+>
+
+    <!-- 
+     OVERWRITTING DEFAULT PortalHibernateConfiguration with our PortalExtletHibernateConfiguration 
+     * loading extlet-hbm.xml configuration file
+    -->
+    <!-- hibernate-spring.xml -->
+	<bean id="liferayHibernateSessionFactory" class="com.liferay.portal.spring.hibernate.PortalExtletHibernateConfiguration">
+		<property name="dataSource" ref="liferayDataSource" />
+	</bean>
+    <!-- shard-datasource-spring.xml -->
+    <!-- USE ONLY WHEN USING SHARD DATASOURCE see http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/Database+Sharding
+    
+	<bean id="shardDataSource0" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+		<property name="targetDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.util.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.default." />
+			</bean>
+		</property>
+	</bean>
+	<bean id="shardDataSource1" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+		<property name="targetDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.util.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.one." />
+			</bean>
+		</property>
+	</bean>
+	<bean id="shardDataSource2" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+		<property name="targetDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.util.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.two." />
+			</bean>
+		</property>
+	</bean>
+	<bean id="shardSessionFactoryTargetSource" class="com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource">
+		<property name="sessionFactories">
+			<map>
+				<entry>
+					<key>
+						<value>default</value>
+					</key>
+					<bean class="com.liferay.portal.spring.hibernate.PortalExtletHibernateConfiguration">
+						<property name="dataSource" ref="shardDataSource0" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value>one</value>
+					</key>
+					<bean class="com.liferay.portal.spring.hibernate.PortalExtletHibernateConfiguration">
+						<property name="dataSource" ref="shardDataSource1" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value>two</value>
+					</key>
+					<bean class="com.liferay.portal.spring.hibernate.PortalExtletHibernateConfiguration">
+						<property name="dataSource" ref="shardDataSource2" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+    -->
+
+    <!-- 
+     OVERWRITTING DEFAULT ModelHintsUtil with our ExtletModelHintsUtil 
+     * loading extlet-model-hints.xml configuration file
+    -->
+    <!-- util-spring.xml -->
+	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
+		<property name="modelHints">
+			<bean class="com.liferay.portal.model.ExtletModelHintsImpl">
+				<property name="SAXReader" ref="com.liferay.portal.kernel.xml.SAXReader" />
+			</bean>
+		</property>
+	</bean>
+</beans>

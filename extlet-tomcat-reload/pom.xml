@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>eu.ibacz.extlet</groupId>
+    <artifactId>extlet-tomcat-reload</artifactId>
+    <packaging>jar</packaging>
+    <name>Extlet Setup :: ${artifactId}</name>
+    <version>1.1</version>
+    <url>http://w3.ibacz.cz/confluence/display/KIII/Extlet</url>
+    <description>Extlet enabling Tomcat reload</description>
+    <developers>
+        <developer>
+            <id>tomas.polesovsky</id>
+            <name>Tomas Polesovsky</name>
+            <organization>IBA CZ s.r.o</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <email>tomas.polesovsky@ibacz.eu</email>
+        </developer>
+    </developers>
+    <ciManagement>
+        <system>Continuum</system>
+        <url>http://w3.ibacz.cz/continuum</url>
+        <notifiers>
+            <notifier>
+                <type>mail</type>
+                <configuration>
+                    <address>tomas.polesovsky@ibacz.eu</address>
+                </configuration>
+                <sendOnError>true</sendOnError>
+                <sendOnFailure>true</sendOnFailure>
+                <sendOnSuccess>false</sendOnSuccess>
+                <sendOnWarning>false</sendOnWarning>
+            </notifier>
+        </notifiers>
+    </ciManagement>
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://w3.ibacz.cz/jira/browse/KIII/component/10282</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:svn:https://w3.ibacz.cz/repos/KIII/liferay/trunk/extlet-tomcat-reload</connection>
+        <developerConnection>scm:svn:https://w3.ibacz.cz/repos/KIII/liferay/trunk/extlet-tomcat-reload</developerConnection>
+        <url></url>
+    </scm>
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+        <finalName>${pom.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/conf</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4.3</version>
+            </plugin>
+
+        </plugins>
+    </build>
+    <dependencies>
+
+
+        <dependency>
+            <groupId>com.liferay.portal</groupId>
+            <artifactId>portal-kernel</artifactId>
+            <version>5.2.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay.portal</groupId>
+            <artifactId>portal-service</artifactId>
+            <version>5.2.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay.portal</groupId>
+            <artifactId>portal-impl</artifactId>
+            <version>5.2.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.jcr</groupId>
+            <artifactId>jcr</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>quartz</artifactId>
+            <version>1.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+    <profiles />
+</project>

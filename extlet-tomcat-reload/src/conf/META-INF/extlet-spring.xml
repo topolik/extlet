@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+>
+
+    <!--
+     OVERWRITTING DEFAULT JobSchedulerImpl with our ExtletJobSchedulerImpl
+     * overwriting Liferay's scheduler-spring.xml configuration file
+    -->
+	<bean id="com.liferay.portal.kernel.job.JobSchedulerUtil" class="com.liferay.portal.kernel.job.JobSchedulerUtil">
+		<property name="jobScheduler">
+			<bean class="eu.ibacz.extlet.tomcatreload.ExtletJobSchedulerImpl">
+				<property name="scheduler">
+					<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+						<property name="quartzProperties">
+							<props>
+								<prop key="org.quartz.threadPool.threadCount">3</prop>
+							</props>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>

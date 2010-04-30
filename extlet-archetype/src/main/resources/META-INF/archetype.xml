@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype>
+  <id>extlet-archetype-5.2.3</id>
+  
+  <resources>
+    <resource>extlet-impl/pom.xml</resource>
+    <resource>extlet-impl/src/main/resources/content/Language-extlet.properties</resource>
+    <resource>extlet-impl/src/main/resources/content/Language-extlet_cs.properties</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-hbm.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-model-hints.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-portal.properties</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-remoting-servlet.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-spring.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/liferay-portlet-extlet.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/portlet-extlet.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-struts-config.xml</resource>
+    <resource>extlet-impl/src/main/resources/META-INF/extlet-tiles-defs.xml</resource>
+	<resource>extlet-service/pom.xml</resource>
+    <resource>war/pom.xml</resource>
+    <resource>war/src/main/webapp/index.jsp</resource>
+    <resource>war/src/main/webapp/WEB-INF/liferay-extlet.properties</resource>
+    <resource>war/src/main/webapp/WEB-INF/liferay-hook.xml</resource>
+    <resource>war/src/main/webapp/WEB-INF/liferay-plugin-package.properties</resource>
+    <resource>war/src/main/webapp/WEB-INF/web.xml</resource>
+  </resources>
+  
+</archetype>
