@@ -29,6 +29,19 @@
 			<url>http://github.com/topolik/extlet/raw/master/LICENCE</url>
 		</license>
 	</licenses>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Snapshots repository</name>
+			<url>http://localhost/nexus/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+		<repository>
+			<id>releases</id>
+			<name>Releases repository</name>
+			<url>http://localhost/nexus/content/repositories/releases</url>
+		</repository>		
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>eu.ibacz.k3.liferay.extlet</groupId>
