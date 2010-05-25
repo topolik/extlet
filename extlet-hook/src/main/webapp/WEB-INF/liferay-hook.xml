@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 5.1.0//EN" "http://www.liferay.com/dtd/liferay-hook_5_1_0.dtd">
+
+<hook>
+	<event>
+		<event-class>eu.ibacz.k3.liferay.extlet.events.ExtletInstaller</event-class>
+		<event-type>application.startup.events</event-type>
+	</event>	
+</hook>

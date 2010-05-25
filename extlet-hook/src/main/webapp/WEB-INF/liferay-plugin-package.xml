@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin-package PUBLIC "-//Liferay//DTD Plugin Package 5.0.0//EN" "http://www.liferay.com/dtd/liferay-plugin-package_5_0_0.dtd">
+<plugin-package>
+	<name>${package.name}</name>
+	<module-id>${project.groupId}/${project.artifactId}/${project.version}/${project.packaging}</module-id>
+	<types>
+		<type>hook</type>
+	</types>
+	<tags>
+		<tag>extlet</tag>
+		<tag>runtime</tag>
+		<tag>hook</tag>
+		<tag>EXT</tag>
+		<tag>ibacz</tag>
+	</tags>
+	<short-description>${project.description}</short-description>
+	<change-log>First version.</change-log>
+	<page-url>${project.url}</page-url>	
+	<author>${project.organization.name}</author>
+	<licenses>
+		<license osi-approved="true">MIT</license>
+	</licenses>
+	<liferay-versions>
+		<liferay-version>${liferay.version}</liferay-version>
+	</liferay-versions>
+</plugin-package>
