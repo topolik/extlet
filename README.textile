@@ -5,6 +5,10 @@ by Tomáš Polešovský, "IBA CZ, s. r. o.":http://www.ibacz.eu/
 
 For more info see the "Wiki":http://wiki.github.com/topolik/extlet/
 
+h2. News
+* Preparing Ant environment with ServiceBuilder and support for Oracle WebLogic AS
+* *07.10.10* - Added Extlet Hook - Extlet environment can be now installed into Liferay using this hook (just download "extlet-hook.war":http://github.com/downloads/topolik/extlet/extlet-hook.war and put into deploy directory) - thanks to "Petr Vlček":http://github.com/petrvlcek
+
 h2. Quick Overview
 
 * It is development (maven) and runtime environment for Liferay 5.2.3 running on the Tomcat
