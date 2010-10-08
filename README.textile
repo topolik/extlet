@@ -6,7 +6,8 @@ by Tomáš Polešovský, "IBA CZ, s. r. o.":http://www.ibacz.eu/
 For more info see the "Wiki":http://wiki.github.com/topolik/extlet/
 
 h2. News
-* Preparing Ant environment with ServiceBuilder and support for Oracle WebLogic AS
+* Preparing - support for Oracle WebLogic AS
+* *08.10.10* - Ant environment with Service Builder support (download "extlet-ant-sdk.zip":http://github.com/downloads/topolik/extlet/extlet-ant-sdk.zip and look into [[Basic Project - Ant]])
 * *07.10.10* - Added Extlet Hook - Extlet environment can be now installed into Liferay using this hook (just download "extlet-hook.war":http://github.com/downloads/topolik/extlet/extlet-hook.war and put into deploy directory) - thanks to "Petr Vlček":http://github.com/petrvlcek
 
 h2. Quick Overview
@@ -26,7 +27,9 @@ h2. Documentation
 ** "Installation":http://wiki.github.com/topolik/extlet/installation
 * Development
 ** "Pre-development Tasks":http://wiki.github.com/topolik/extlet/pre-development-tasks
-** "Basic Project":http://wiki.github.com/topolik/extlet/basic-project
+** "Basic Project - Ant":http://wiki.github.com/topolik/extlet/basic-project---ant
+** "Basic Project - Maven":http://wiki.github.com/topolik/extlet/basic-project---maven
+
 ** "Adding Hooks and Portlets":http://wiki.github.com/topolik/extlet/adding-hooks-and-portlets
 ** "Extlet Configuration Files":http://wiki.github.com/topolik/extlet/extlet-configuration-files
 * Advanced Documentation
