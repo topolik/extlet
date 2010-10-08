@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 5.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_5_2_0.dtd">
+<service-builder package-path="com.liferay.portal">
+	<namespace>Portal</namespace>
+
+	<entity name="UserAttributes" table="AdditionalUserAttributes" local-service="true" remote-service="false">
+        <!-- primary key -->
+		<column name="id" type="long" primary="true" />
+
+        <!-- foreign key -->
+		<column name="userId" type="long" />
+
+        <!-- columns -->
+		<column name="personalNumber" type="String" />
+
+		<finder name="UserId" return-type="UserAttributes">
+			<finder-column name="userId" />
+		</finder>
+	</entity>
+</service-builder>

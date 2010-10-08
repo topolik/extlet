@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="dist" name="@extlet.name@">
+
+	<property file="build.properties"/>
+	<property environment="env"/>
+
+	<path id="extlet.service.classpath">
+        <!-- local libraries -->
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+        <!-- portal-kernel.jar & portal-service.jar -->
+		<fileset dir="${portal.service.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	<path id="extlet.impl.classpath">
+        <!-- local libraries -->
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+        <!-- portal-kernel.jar & portal-service.jar -->
+		<fileset dir="${portal.service.dir}">
+			<include name="*.jar"/>
+		</fileset>
+        <!-- portal-impl.jar & other needed jars -->
+		<fileset dir="${portal.impl.dir}">
+			<include name="*.jar"/>
+		</fileset>
+        <!-- extlet-service classes -->
+		<dirset dir="build" includes="service/" />
+	</path>
+	<path id="war.classpath">
+        <!-- local libraries -->
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+        <!-- extlet-impl and extlet-service classes -->
+		<dirset dir="build" includes="service/" />
+		<dirset dir="build" includes="impl/" />
+        <!-- portal-kernel.jar & portal-service.jar -->
+		<fileset dir="${portal.service.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+    <!--
+            INIT & CLEAN
+    -->
+
+	<target name="init">
+		<mkdir dir="build/impl"/>
+		<mkdir dir="build/service"/>
+		<mkdir dir="build/war/WEB-INF/classes" />
+		<mkdir dir="build/war/WEB-INF/lib" />
+		<mkdir dir="dist"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="build" />
+        <delete dir="dist" />
+    </target>
+
+    <!--
+            BUILD
+    -->
+
+
+    <target name="build-service" depends="init">
+
+		<copy includeemptydirs="false" todir="build/service">
+			<fileset dir="extlet-service/src/main/resources">
+				<exclude name="**/*.java"/>
+				<exclude name="**/*.html"/>
+			</fileset>
+		</copy>
+
+		<javac debug="${debug}" debuglevel="${debuglevel}" destdir="build/service"
+            source="${source}" target="${target}" encoding="${encoding}"
+            fork="${useOtherCompiler}" executable="${javac.path}">
+			<src path="extlet-service/src/main/java" />
+			<classpath refid="extlet.service.classpath" />
+		</javac>
+    </target>
+
+
+    <target name="build-impl" depends="build-service">
+
+		<copy includeemptydirs="false" todir="build/impl">
+			<fileset dir="extlet-impl/src/main/resources">
+				<exclude name="**/*.java"/>
+				<exclude name="**/*.html"/>
+			</fileset>
+		</copy>
+
+		<javac debug="${debug}" debuglevel="${debuglevel}" destdir="build/impl"
+            source="${source}" target="${target}" encoding="${encoding}"
+            fork="${useOtherCompiler}" executable="${javac.path}">
+			<src path="extlet-impl/src/main/java" />
+			<classpath refid="extlet.impl.classpath" />
+		</javac>
+    </target>
+
+    <target name="build-war" depends="build-impl, build-service">
+        <!-- copy JSPs, WEB-INF and/or other content -->
+		<copy includeemptydirs="true" todir="build/war">
+			<fileset dir="war/src/main/webapp" />
+		</copy>
+
+        <!-- copy resources that should be on classpath -->
+		<copy includeemptydirs="false" todir="build/war/WEB-INF/classes">
+			<fileset dir="war/src/main/resources">
+				<exclude name="**/*.java"/>
+				<exclude name="**/*.html"/>
+			</fileset>
+		</copy>
+
+        <!-- compile classes -->
+		<javac debug="${debug}" debuglevel="${debuglevel}" destdir="build/war/WEB-INF/classes"
+            source="${source}" target="${target}" encoding="${encoding}"
+            fork="${useOtherCompiler}" executable="${javac.path}">
+			<src path="war/src/main/java" />
+			<classpath refid="war.classpath" />
+		</javac>
+    </target>
+
+    <!--
+            DIST
+    -->
+    <target name="dist" depends="dist-war" />
+
+    <target name="dist-service" depends="build-service">
+		<jar destfile="dist/${extlet.service.jar.name}"
+            basedir="build/service"
+            includes="** "/>
+    </target>
+    <target name="dist-impl" depends="build-impl">
+		<jar destfile="dist/${extlet.impl.jar.name}"
+            basedir="build/impl"
+            includes="** "/>
+    </target>
+
+    <target name="dist-war" depends="build-war,dist-service,dist-impl">
+
+		<copy includeemptydirs="false" todir="build/war/WEB-INF/extlet-lib">
+			<fileset dir="dist">
+				<include name="${extlet.impl.jar.name}"/>
+				<include name="${extlet.service.jar.name}"/>
+            </fileset>
+		</copy>
+
+        <war destfile="dist/${extlet.war.name}" basedir="build/war" />
+    </target>
+
+    <!--
+        Service Builder
+    -->
+
+	<path id="service-builder.classpath">
+        <!-- local libraries -->
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+
+        <!-- portal-kernel.jar & portal-service.jar -->
+		<fileset dir="${portal.service.dir}">
+			<include name="*.jar"/>
+		</fileset>
+
+        <!-- portal-impl.jar & other needed jars -->
+		<fileset dir="${portal.impl.dir}">
+			<include name="*.jar"/>
+		</fileset>
+
+	</path>
+
+	<taskdef classpathref="service-builder.classpath" resource="net/sf/antcontrib/antlib.xml" />
+
+	<target name="service-builder" depends="init">
+        <!-- directory for files that aren't useful for extlet -->
+        <mkdir dir="build/service-builder-temp" />
+        <mkdir dir="extlet-impl/src/main/resources/sql" />
+
+		<java
+			classname="com.liferay.portal.tools.servicebuilder.ServiceBuilder"
+			classpathref="service-builder.classpath"
+			fork="true"
+			maxmemory="256m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<jvmarg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
+			<jvmarg value="-Dservice.input.file=${service.file}" />
+			<jvmarg value="-Dservice.hbm.file=extlet-impl/src/main/resources/META-INF/extlet-hbm.xml" />
+			<jvmarg value="-Dservice.orm.file=extlet-impl/src/main/resources/META-INF/extlet-orm.xml" />
+			<jvmarg value="-Dservice.model.hints.file=extlet-impl/src/main/resources/META-INF/extlet-model-hints.xml" />
+			<jvmarg value="-Dservice.spring.file=extlet-impl/src/main/resources/META-INF/extlet-spring.xml" />
+			<jvmarg value="-Dservice.api.dir=extlet-service/src/main/java" />
+			<jvmarg value="-Dservice.impl.dir=extlet-impl/src/main/java" />
+			<jvmarg value="-Dservice.json.file=extlet-impl/src/main/resources/META-INF/service.js" />
+			<jvmarg value="-Dservice.remoting.file=docroot/WEB-INF/ext-web/docroot/WEB-INF/remoting-servlet-ext.xml" />
+			<jvmarg value="-Dservice.sql.dir=extlet-impl/src/main/resources/sql" />
+			<jvmarg value="-Dservice.sql.file=tables.sql" />
+			<jvmarg value="-Dservice.sql.indexes.file=indexes.sql" />
+			<jvmarg value="-Dservice.sql.indexes.properties.file=indexes.properties" />
+			<jvmarg value="-Dservice.sql.sequences.file=sequences.sql" />
+			<jvmarg value="-Dservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
+			<jvmarg value="-Dservice.props.util=com.liferay.portal.util.PropsUtil" />
+		</java>
+
+		<delete file="extlet-impl/src/main/java/service.properties" /> <!-- needed only by plugin, not extlet -->
+		<delete file="ServiceBuilder.temp" />
+        <delete dir="build/service-builder-temp" />
+	</target>
+</project>

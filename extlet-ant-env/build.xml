@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="create-extlet" name="extlet-creator">
+    <property name="extlet.name.default" value="my-extlet" />
+    <property name="extlet.version.default" value="1.0" />
+
+    <target name="create-extlet" depends="-get-extlet-name, -unzip-extlet, -init-build-properties, -init-index-jsp" />
+
+    <!-- implementation -->
+    <target name="-get-extlet-name" unless="extlet.name">
+        <input defaultvalue="${extlet.name.default}" addproperty="extlet.name" message="How would you like to name you new extlet?"/>
+        <input defaultvalue="${extlet.version.default}" addproperty="extlet.version" message="Version of your ${extlet.name}?"/>
+    </target>
+
+    <target name="-unzip-extlet" depends="-get-extlet-name">
+        <unzip src="extlet-ant-project-template.zip" dest="${extlet.name}" />
+    </target>
+
+    <target name="-init-build-properties" depends="-get-extlet-name" description="Set name of the extlet into files">
+		<replace dir="${extlet.name}/">
+			<replacefilter token="@extlet.name@" value="${extlet.name}" />
+			<replacefilter token="@extlet.version@" value="${extlet.version}" />
+		</replace>
+    </target>
+
+    <target name="-init-index-jsp" depends="-init-build-properties" description="Set current extlet name and version into index.jsp">
+        <!-- include settings from new project -->
+	    <property file="${extlet.name}/build.properties" />
+
+        <replaceregexp file="${extlet.name}/war/src/main/webapp/index.jsp"
+                       match="%INFO%"
+                       replace="Name: ${extlet.name} v. ${extlet.version}"
+                       byline="true"
+        />
+
+    </target>
+
+</project>
