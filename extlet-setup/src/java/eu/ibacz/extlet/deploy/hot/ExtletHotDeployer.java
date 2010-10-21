@@ -258,7 +258,7 @@ public class ExtletHotDeployer {
         File[] extletImplJars = new File[extletImplJarNames.length];
         for (int i = 0; i < extletImplJarNames.length; i++) {
             try {
-                File extletImplJar = new File(event.getServletContext().getResource(extletImplJarNames[i]).getFile());
+                File extletImplJar = getApplicationFile(extletImplJarNames[i]);
                 extletImplJars[i] = extletImplJar;
             } catch (MalformedURLException ex) {
                 throw new HotDeployException(ex.getMessage(), ex);
@@ -284,7 +284,7 @@ public class ExtletHotDeployer {
         File[] extletServiceJars = new File[extletServiceJarNames.length];
         for (int i = 0; i < extletServiceJarNames.length; i++) {
             try {
-                File extletServiceJar = new File(event.getServletContext().getResource(extletServiceJarNames[i]).getFile());
+                File extletServiceJar = getApplicationFile(extletServiceJarNames[i]);
                 extletServiceJars[i] = extletServiceJar;
             } catch (MalformedURLException ex) {
                 throw new HotDeployException(ex.getMessage(), ex);
@@ -309,6 +309,17 @@ public class ExtletHotDeployer {
      */
     private String getPortalImplJarName(String extletImplJarName) {
         return PortalUtil.getPortalLibDir() + new File(extletImplJarName).getName();
+    }
+
+    /**
+     * Tries to locate file in web application
+     */
+    private File getApplicationFile(String name) throws MalformedURLException{
+        String location = event.getServletContext().getRealPath(name);
+        if(location == null){
+            location = event.getServletContext().getResource(name).getFile();
+        }
+        return new File(location);
     }
 
     /**
