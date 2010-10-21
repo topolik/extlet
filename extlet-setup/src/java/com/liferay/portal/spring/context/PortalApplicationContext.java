@@ -99,7 +99,7 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
          * MODIFICATION: load also our extlet-spring.xml from all jars on the classpath
          */
 		reader.setResourceLoader(new PathMatchingResourcePatternResolver());
-		try { 
+		try {
             // load setup of extlet environment
             if(_log.isDebugEnabled()) {
                 _log.debug("Loading Extlet Setup Spring environment");

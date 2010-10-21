@@ -40,16 +40,21 @@ public class WebLogicServletContainerController implements ServletContainerContr
         return ServerDetector.WEBLOGIC_ID;
     }
 
+    /**
+     * Returns true if WebLogic is starting
+     */
     public boolean isStarting() {
         // I know this is a raw superhack, but this is the only one I was able to invent so as it would be simple :D
         StringWriter sw = new StringWriter();
         new Exception().printStackTrace(new PrintWriter(sw));
         String stacktrace = sw.toString();
-        return
-            stacktrace.contains("weblogic.management.deploy.internal.DeploymentServerService.start(") ||
-            stacktrace.contains("weblogic.application.internal.SingleModuleDeployment.activate(");
+        // liferay is also starting
+        return stacktrace.contains("weblogic.servlet.internal.StubSecurityHelper.createServlet(");
     }
 
+    /**
+     * Returns true if WebLogic is shutting down
+     */
     public boolean isShuttingDown() {
         // I know this is a raw superhack, but this is the only one I was able to invent so as it would be simple :D
         StringWriter sw = new StringWriter();
@@ -60,10 +65,16 @@ public class WebLogicServletContainerController implements ServletContainerContr
             stacktrace.contains("weblogic.application.internal.SingleModuleDeployment.deactivate(");
     }
 
+    /**
+     * There isn't support for triggering restart yet, thus returning false.
+     */
     public boolean isTriggeredRestart() {
         return false;
     }
 
+    /**
+     * There isn't support for triggering restart yet.
+     */
     public void restartPortal() {
         if (_log.isWarnEnabled()) {
             _log.warn("There is not support for WebLogic reload. Please restart WebLogic manually.");

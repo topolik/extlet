@@ -51,27 +51,28 @@ import com.liferay.portal.util.PropsUtil;
  * @author Tomáš Polešovský
  */
 public class ExtletPropsUtils {
+
     /**
      * Definition of the configuration files, default configuration is the
      * <code>eu.ibacz.extlet.deploy.hot.extletProperties=/WEB-INF/liferay-extlet.properties,/META-INF/liferay-extlet.properties</code>
      */
-	public static final String[] EXTLET_PROPERTIES = StringUtil.split(
+    public static final String[] EXTLET_PROPERTIES = StringUtil.split(
             GetterUtil.getString(PropsUtil.get("eu.ibacz.extlet.deploy.hot.extletProperties"),
             "/WEB-INF/liferay-extlet.properties,/META-INF/liferay-extlet.properties"));
-	
-	protected static Properties getExtletProperties(HotDeployEvent event) throws HotDeployException {
-        for(String propertiesLocation : EXTLET_PROPERTIES){
-            if(_log.isDebugEnabled()){
+
+    protected static Properties getExtletProperties(HotDeployEvent event) throws HotDeployException {
+        for (String propertiesLocation : EXTLET_PROPERTIES) {
+            if (_log.isDebugEnabled()) {
                 _log.debug("Loading extlet properties: " + propertiesLocation);
             }
             URL properties;
-			try {
-				properties = event.getServletContext().getResource(propertiesLocation);
-			} catch (MalformedURLException e) {
-				throw new HotDeployException("Cannot open property file", e);
-			}
+            try {
+                properties = event.getServletContext().getResource(propertiesLocation);
+            } catch (MalformedURLException e) {
+                throw new HotDeployException("Cannot open property file", e);
+            }
 
-            if(_log.isDebugEnabled()){
+            if (_log.isDebugEnabled()) {
                 _log.debug("Loading extlet properties from " + properties);
             }
             InputStream is = null;
@@ -84,7 +85,7 @@ public class ExtletPropsUtils {
                 if (is != null) {
                     String propertiesString = StringUtil.read(is);
 
-                    if(_log.isDebugEnabled()){
+                    if (_log.isDebugEnabled()) {
                         _log.debug("Extlet properties loaded from " + properties);
                     }
                     return PropertiesUtil.load(propertiesString);
@@ -113,7 +114,6 @@ public class ExtletPropsUtils {
 
         return null;
     }
-
-	private static Log _log =
-        LogFactoryUtil.getLog(ExtletPropsUtils.class);
+    private static Log _log =
+            LogFactoryUtil.getLog(ExtletPropsUtils.class);
 }

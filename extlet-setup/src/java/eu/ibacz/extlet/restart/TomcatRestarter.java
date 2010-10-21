@@ -71,13 +71,6 @@ public class TomcatRestarter implements Runnable {
             return;
         }
 
-        if(!ServerDetector.isTomcat()){
-            if (_log.isWarnEnabled()) {
-                _log.warn("Liferay is not running on the Tomcat! Please reload application manually!");
-            }
-            return;
-        }
-
         /*
          * Keep only one instance of the class until restart finishes.
          */

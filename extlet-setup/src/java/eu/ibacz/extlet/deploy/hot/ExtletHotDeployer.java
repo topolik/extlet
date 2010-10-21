@@ -22,8 +22,7 @@
 package eu.ibacz.extlet.deploy.hot;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
@@ -32,9 +31,10 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.util.PortalUtil;
+import eu.ibacz.extlet.restart.ServletContainerUtil;
 
-import eu.ibacz.extlet.restart.TomcatRestarter;
 
 /**
  * Deployer that copies (removes) extlet jars throughout the portal.<br />
@@ -66,10 +66,12 @@ public class ExtletHotDeployer {
     public static final String EXTLET_SERVICE_JAR_NAME_KEY = "extlet.service.jar.name";
     private HotDeployEvent event;
     private Properties extletProperties;
+    private ServletContainerUtil containerDetector;
 
     public ExtletHotDeployer(HotDeployEvent event, Properties properties) {
         this.event = event;
         this.extletProperties = properties;
+        containerDetector = new ServletContainerUtil();
     }
 
     /**
@@ -89,6 +91,7 @@ public class ExtletHotDeployer {
         }
 
         if (!isDeployTime()) {
+            _log.info("Extlet " + event.getServletContextName() + " is loaded.");
             return;
         }
 
@@ -109,7 +112,7 @@ public class ExtletHotDeployer {
             if (_log.isInfoEnabled()) {
                 _log.info("Restart is needed. Restart should start in a few seconds ... ");
             }
-            TomcatRestarter.startThread();
+            containerDetector.restartContainer();
         }
     }
 
@@ -142,7 +145,7 @@ public class ExtletHotDeployer {
             if (_log.isInfoEnabled()) {
                 _log.info("Restart is needed. Restart should start in a few seconds ... ");
             }
-            TomcatRestarter.startThread();
+            containerDetector.restartContainer();
         }
     }
 
@@ -254,8 +257,12 @@ public class ExtletHotDeployer {
         String[] extletImplJarNames = getExtletImplJarNames();
         File[] extletImplJars = new File[extletImplJarNames.length];
         for (int i = 0; i < extletImplJarNames.length; i++) {
-            File extletImplJar = new File(event.getServletContext().getRealPath(extletImplJarNames[i]));
-            extletImplJars[i] = extletImplJar;
+            try {
+                File extletImplJar = new File(event.getServletContext().getResource(extletImplJarNames[i]).getFile());
+                extletImplJars[i] = extletImplJar;
+            } catch (MalformedURLException ex) {
+                throw new HotDeployException(ex.getMessage(), ex);
+            }
         }
         return extletImplJars;
     }
@@ -271,12 +278,17 @@ public class ExtletHotDeployer {
     /**
      * Returns files from webapp that should be copied into the portal service location
      */
-    public File[] getExtletServiceJars() {
+    public File[] getExtletServiceJars() throws HotDeployException{
         String[] extletServiceJarNames = getExtletServiceJarNames();
 
         File[] extletServiceJars = new File[extletServiceJarNames.length];
         for (int i = 0; i < extletServiceJarNames.length; i++) {
-            extletServiceJars[i] = new File(event.getServletContext().getRealPath(extletServiceJarNames[i]));
+            try {
+                File extletServiceJar = new File(event.getServletContext().getResource(extletServiceJarNames[i]).getFile());
+                extletServiceJars[i] = extletServiceJar;
+            } catch (MalformedURLException ex) {
+                throw new HotDeployException(ex.getMessage(), ex);
+            }
         }
         return extletServiceJars;
     }
@@ -345,59 +357,20 @@ public class ExtletHotDeployer {
 
     /**
      * Returns <code>TRUE</code> if and only if extlet is undeploying.
+     * @see ServletContainerStateDetector
      */
     private boolean isUndeployTime() {
-        // the tomcat is shutting down, we don't need to remove extlet jar
-        if (isTomcatShuttingDown()) {
-            if (_log.isDebugEnabled()) {
-                _log.debug("Liferay is shutting down, stopping undeploying extlet jar");
-            }
-            return false;
-        }
-        return true;
+        return containerDetector.isUndeployTime();
     }
 
     /**
-     * Return <b>TRUE</b> if and only if the tomcat is deploying and we can start deploying the JARs
+     * Return <b>TRUE</b> if and only if the servlet container is deploying and we can start deploying the JARs.
+     * @see ServletContainerStateDetector
      */
     private boolean isDeployTime() {
-        // the tomcat is starting, we don't need to copy extlet jar
-        if (isTomcatStarting()) {
-            if (_log.isDebugEnabled()) {
-                _log.debug("Liferay is starting, stopping deploying extlet jars");
-            }
-            return false;
-        }
-        // tomcat is restarting using our Restarter => existing web app reloading
-        if (TomcatRestarter.getRestartPhase() == TomcatRestarter.PHASE_RESTARTING) {
-            if (_log.isDebugEnabled()) {
-                _log.debug("Liferay is restarting, stopping deploying extlet jars");
-            }
-            return false;
-        }
-
-        return true;
+        return containerDetector.isDeployTime();
     }
 
-    /**
-     * Return true if the tomcat server is in the starting phase, false otherwise
-     */
-    protected boolean isTomcatStarting() {
-        // I know this is a raw superhack, but this is the only one I was able to invent so as it would be simple :D
-        StringWriter sw = new StringWriter();
-        new Exception().printStackTrace(new PrintWriter(sw));
-        return sw.toString().contains("org.apache.catalina.startup.Catalina.start(");
-    }
-
-    /**
-     * Return true if the tomcat server is in the shutting down phase, false otherwise
-     */
-    protected boolean isTomcatShuttingDown() {
-        // Another one raw superhack, again, this is the only one I was able to invent so as it would be still simple :D
-        StringWriter sw = new StringWriter();
-        new Exception().printStackTrace(new PrintWriter(sw));
-        return sw.toString().contains("org.apache.catalina.startup.Catalina.stop(");
-    }
     private static Log _log =
             LogFactoryUtil.getLog(ExtletHotDeployer.class);
 }
