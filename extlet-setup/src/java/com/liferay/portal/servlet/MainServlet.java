@@ -21,6 +21,8 @@
  */
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -41,10 +43,11 @@ import org.xml.sax.InputSource;
  * @author Ondřej Životský
  */
 public class MainServlet extends LiferayMainServlet {
-	/**
-	 * Defines extlet-struts-config.xml file.
-	 */
-	public static final String EXTLET_STRUTS_CONFIG = "META-INF/extlet-struts-config.xml";
+
+    /**
+     * Defines extlet-struts-config.xml file.
+     */
+    public static final String EXTLET_STRUTS_CONFIG = "META-INF/extlet-struts-config.xml";
 
     /**
      * Count number of the extlet config files.
@@ -67,13 +70,13 @@ public class MainServlet extends LiferayMainServlet {
         ClassLoader portalClassLoader = com.liferay.portal.kernel.util.PortalClassLoaderUtil.getClassLoader();
         try {
             Enumeration<URL> urls = portalClassLoader.getResources(EXTLET_STRUTS_CONFIG);
-            while(urls.hasMoreElements()){                
+            while (urls.hasMoreElements()) {
                 sb.append("," + urls.nextElement().toString().replaceAll(",", "\u2615"));
             }
         } catch (IOException ex) {
-            log.error("Problem with gathering struts config files ", ex);
+            _log.error("Problem with gathering struts config files ", ex);
         }
-        
+
         super.config = sb.toString();
     }
 
@@ -81,14 +84,14 @@ public class MainServlet extends LiferayMainServlet {
      * <p>Parses original struts config file calling super.parseModuleConfigFile(), then try to load all extlet config files.</p>
      */
     protected void parseModuleConfigFile(Digester digester, String path)
-        throws UnavailableException {
+            throws UnavailableException {
 
-        if(!path.contains(EXTLET_STRUTS_CONFIG)){
+        if (!path.contains(EXTLET_STRUTS_CONFIG)) {
             super.parseModuleConfigFile(digester, path);
             return;
         }
 
-		try {
+        try {
             //load file (and replace back the coffee for comma)
             URL url = new URL(path.replaceAll("\u2615", ","));
 
@@ -98,24 +101,24 @@ public class MainServlet extends LiferayMainServlet {
                 xmlStream.setByteStream(is);
                 digester.parse(is);
             } catch (Exception e) {
-                log.error("Cannot load Extlet struts config file: " + url, e);
+                _log.error("Cannot load Extlet struts config file: " + url, e);
             } finally {
                 if (is != null) {
                     try {
                         is.close();
                     } catch (IOException e) {
-                        log.error("Cannot close stream to the struts config file: " + url, e);
+                        _log.error("Cannot close stream to the struts config file: " + url, e);
                     }
                 }
             }
-		} catch (Exception e) {
-            log.error("Cannot load Extlet Struts config files!", e);
-		}
+        } catch (Exception e) {
+            _log.error("Cannot load Extlet Struts config files!", e);
+        }
 
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         super.service(request, response);
     }
-
+    private static Log _log = LogFactoryUtil.getLog(MainServlet.class);
 }

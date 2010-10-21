@@ -1123,6 +1123,6 @@ public class LiferayMainServlet extends ActionServlet {
 	private static final String _LIFERAY_PORTAL_REQUEST_HEADER =
 		"Liferay-Portal";
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayMainServlet.class);
+	private static Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
 }
