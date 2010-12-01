@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.util.PortalUtil;
 import eu.ibacz.extlet.restart.ServletContainerUtil;
+import eu.ibacz.extlet.conflict.ExtletConflictRegister;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -67,11 +69,13 @@ public class ExtletHotDeployer {
     private HotDeployEvent event;
     private Properties extletProperties;
     private ServletContainerUtil containerDetector;
+    private ExtletConflictRegister conflictRegister;
 
     public ExtletHotDeployer(HotDeployEvent event, Properties properties) {
         this.event = event;
         this.extletProperties = properties;
         containerDetector = new ServletContainerUtil();
+        conflictRegister = new ExtletConflictRegister(event);
     }
 
     /**
@@ -90,9 +94,33 @@ public class ExtletHotDeployer {
             return;
         }
 
+        ArrayList<File> extletJars = new ArrayList<File>();
+        try {
+        if(hasExtletServiceJar()){
+            extletJars.addAll(Arrays.asList(getExtletServiceJars()));
+        }
+        if (hasExtletImplJar()) {
+            extletJars.addAll(Arrays.asList(getExtletImplJars()));
+        }
+        } catch(Throwable e){
+            e.printStackTrace(System.err);
+        }
+
         if (!isDeployTime()) {
+            if(extletJars.size() > 0){
+                conflictRegister.register(extletJars);
+            }
             _log.info("Extlet " + event.getServletContextName() + " is loaded.");
             return;
+        }
+
+        if(extletJars.size() > 0){
+            try {
+                conflictRegister.checkConflict(extletJars);
+            } catch (HotDeployException e){
+                _log.error("Extlet " + event.getServletContextName() + " will not be deployed!");
+                throw(e);
+            }
         }
 
         boolean isRestartNeeded = false;
