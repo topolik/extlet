@@ -7,6 +7,7 @@ For more info see the "Wiki":http://wiki.github.com/topolik/extlet/
 
 h2. News
 * Planning - Support for Liferay 6 and migration into Ext Plugin
+* *01.12.10* - Conflict checking - build extlet-setup from sources please
 * *15.10.10* - Support for Oracle WebLogic AS (without reload)
 * *08.10.10* - Ant environment with Service Builder support (download "extlet-ant-sdk.zip":http://github.com/downloads/topolik/extlet/extlet-ant-sdk.zip and look into "Basic Project - Ant"::http://wiki.github.com/topolik/extlet/basic-project---ant)
 * *07.10.10* - Added Extlet Hook - Extlet environment can be now installed into Liferay using this hook (just download "extlet-hook.war":http://github.com/downloads/topolik/extlet/extlet-hook.war and put into deploy directory) - thanks to "Petr Vlček":http://github.com/petrvlcek
