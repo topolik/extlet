@@ -5,14 +5,14 @@
 	<packaging>war</packaging>
 	<groupId>eu.ibacz.k3.liferay.extlet</groupId>
 	<artifactId>extlet-hook</artifactId>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4</version>
 	<name>${package.name}</name>
 	<description>Support for Extlet ${extlet.version} development and runtime environment.</description>
 	<url>http://wiki.github.com/topolik/extlet</url>
 	<inceptionYear>2010</inceptionYear>
 	<properties>
 		<package.name>Extlet Hook</package.name>
-		<extlet.version>1.4-SNAPSHOT</extlet.version>
+		<extlet.version>1.4</extlet.version>
 		<liferay.version>5.2.3</liferay.version>
 	</properties>
 	<issueManagement>

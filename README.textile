@@ -6,7 +6,9 @@ by Tomáš Polešovský, "IBA CZ, s. r. o.":http://www.ibacz.eu/
 For more info see the "Wiki":http://wiki.github.com/topolik/extlet/
 
 h2. News
-* Planning - Support for Liferay 6 and migration into Ext Plugin
+* Planning - Support for Liferay 6
+* *22.03.11* - Version 1.4 released (file conflict checking, support for Oracle WebLogic AS)
+* *02.12.10* - Migration into Ext Plugin - see "LPS-9442":http://issues.liferay.com/browse/LPS-9442
 * *01.12.10* - Conflict checking - build extlet-setup from sources please
 * *15.10.10* - Support for Oracle WebLogic AS (without reload)
 * *08.10.10* - Ant environment with Service Builder support (download "extlet-ant-sdk.zip":http://github.com/downloads/topolik/extlet/extlet-ant-sdk.zip and look into "Basic Project - Ant"::http://wiki.github.com/topolik/extlet/basic-project---ant)
