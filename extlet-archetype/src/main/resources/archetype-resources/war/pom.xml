@@ -15,13 +15,14 @@
             <version>1.0</version>
         </dependency>
 
+
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>extlet-service-${rootArtifactId}-jar</artifactId>
             <version>1.0</version>
         </dependency>
 
-        <dependency>S
+        <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
