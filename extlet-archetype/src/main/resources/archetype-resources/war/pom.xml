@@ -3,7 +3,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>${groupId}</groupId>
-    <artifactId>${artifactId}-war</artifactId>
+    <artifactId>${rootArtifactId}-war</artifactId>
     <name>Extlet WAR Component :: ${dollar}{pom.artifactId}</name>
     <version>1.0</version>
     <packaging>war</packaging>
@@ -11,17 +11,17 @@
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
-            <artifactId>extlet-impl-${artifactId}-jar</artifactId>
-            <version>1.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>extlet-service-${artifactId}-jar</artifactId>
+            <artifactId>extlet-impl-${rootArtifactId}-jar</artifactId>
             <version>1.0</version>
         </dependency>
 
         <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>extlet-service-${rootArtifactId}-jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>S
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
             <version>1.1.2</version>

@@ -3,7 +3,7 @@
     <groupId>eu.ibacz.k3.liferay.extlet</groupId>
     <artifactId>extlet-archetype-5.2.3</artifactId>
     <name>Extlet Archetype for the Liferay Portal 5.2.3</name>
-    <version>2.1.3</version>
+    <version>2.1.4</version>
     <url>http://w3.ibacz.cz/confluence/display/KIII/Extlet</url>
     <packaging>maven-archetype</packaging>
     <build>

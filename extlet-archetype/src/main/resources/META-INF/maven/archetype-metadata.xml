@@ -12,9 +12,6 @@
         </fileSet>
       </fileSets>
     </module>
-  </modules>
-
-  <modules>
     <module name="extlet-impl" id="extlet-impl" dir="extlet-impl">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
@@ -32,9 +29,6 @@
         </fileSet>
       </fileSets>
     </module>
-  </modules>
-  
-  <modules>
     <module name="war" id="war" dir="war">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
