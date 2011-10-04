@@ -4,7 +4,7 @@
     <groupId>eu.ibacz.k3.liferay.extlet</groupId>
     <artifactId>extlet-setup</artifactId>
     <name>Extlet Setup :: ${artifactId}</name>
-	<version>1.4</version>
+	<version>1.5-SNAPSHOT</version>
 	<url>http://wiki.github.com/topolik/extlet</url>
     <description>Extlet runtime environment</description>
     <packaging>jar</packaging>
