@@ -1,51 +1,55 @@
+h1. Warning: unmaintained
+
+This repository is not maintained anymore.
+
 h1. Extlet
 
-"http://github.com/topolik/extlet":http://github.com/topolik/extlet/
-by Tomáš Polešovský, "IBA CZ, s. r. o.":http://www.ibacz.eu/
+"https://github.com/topolik/extlet":https://github.com/topolik/extlet/
+by Tomáš Polešovský, "IBA CZ, s. r. o.":https://www.ibacz.eu/
 
-For more info see the "Wiki":http://wiki.github.com/topolik/extlet/
+For more info see the "Wiki":https://github.com/topolik/extlet/wiki
 
 
 h2. News
 * Support for Liferay 6 - please see new project "extlet6":https://github.com/topolik/extlet6
 * *22.03.11* - Version 1.4 released (file conflict checking, support for Oracle WebLogic AS)
-* *02.12.10* - Migration into Ext Plugin - see "LPS-9442":http://issues.liferay.com/browse/LPS-9442
+* *02.12.10* - Migration into Ext Plugin - see "LPS-9442":https://issues.liferay.com/browse/LPS-9442
 * *01.12.10* - Conflict checking - build extlet-setup from sources please
 * *15.10.10* - Support for Oracle WebLogic AS (without reload)
-* *08.10.10* - Ant environment with Service Builder support (download "extlet-ant-sdk.zip":http://github.com/downloads/topolik/extlet/extlet-ant-sdk.zip and look into [[Basic Project - Ant]])
-* *07.10.10* - Added Extlet Hook - Extlet environment can be now installed into Liferay using this hook (just download "extlet-hook.war":http://github.com/downloads/topolik/extlet/extlet-hook.war and put into deploy directory) - thanks to "Petr Vlček":http://github.com/petrvlcek
+* *08.10.10* - Ant environment with Service Builder support (download "extlet-ant-sdk.zip":https://github.com/downloads/topolik/extlet/extlet-ant-sdk.zip and look into [[Basic Project - Ant]])
+* *07.10.10* - Added Extlet Hook - Extlet environment can be now installed into Liferay using this hook (just download "extlet-hook.war":https://github.com/downloads/topolik/extlet/extlet-hook.war and put into deploy directory) - thanks to "Petr Vlček":https://github.com/petrvlcek
 
 h2. Quick Overview
 
 * It is development (maven) and runtime environment for Liferay 5.2.3 running on the Tomcat
 * Extlet replaces the EXT environment
 * Use it the way you wish, it is free (under MIT)
-* It is supported by the "IBA CZ":http://www.ibacz.eu
+* It is supported by the "IBA CZ":https://www.ibacz.eu
 
 
 h2. Documentation
 * General Information
-** "What is the Extlet":http://wiki.github.com/topolik/extlet/what-is-the-extlet
-** "All-in-one Concept":http://wiki.github.com/topolik/extlet/all-in-one-concept
-** "Licence":http://wiki.github.com/topolik/extlet/licence
-** "Extlet vs. Ext comparison":http://wiki.github.com/topolik/extlet/extlet-vs-ext-comparison
-** "Installation":http://wiki.github.com/topolik/extlet/installation
+** "What is the Extlet":https://wiki.github.com/topolik/extlet/what-is-the-extlet
+** "All-in-one Concept":https://wiki.github.com/topolik/extlet/all-in-one-concept
+** "Licence":https://wiki.github.com/topolik/extlet/licence
+** "Extlet vs. Ext comparison":https://wiki.github.com/topolik/extlet/extlet-vs-ext-comparison
+** "Installation":https://wiki.github.com/topolik/extlet/installation
 * Development
-** "Pre-development Tasks":http://wiki.github.com/topolik/extlet/pre-development-tasks
-** "Basic Project - Ant":http://wiki.github.com/topolik/extlet/basic-project---ant
-** "Basic Project - Maven":http://wiki.github.com/topolik/extlet/basic-project---maven
+** "Pre-development Tasks":https://wiki.github.com/topolik/extlet/pre-development-tasks
+** "Basic Project - Ant":https://wiki.github.com/topolik/extlet/basic-project---ant
+** "Basic Project - Maven":https://wiki.github.com/topolik/extlet/basic-project---maven
 
-** "Adding Hooks and Portlets":http://wiki.github.com/topolik/extlet/adding-hooks-and-portlets
-** "Extlet Configuration Files":http://wiki.github.com/topolik/extlet/extlet-configuration-files
+** "Adding Hooks and Portlets":https://wiki.github.com/topolik/extlet/adding-hooks-and-portlets
+** "Extlet Configuration Files":https://wiki.github.com/topolik/extlet/extlet-configuration-files
 * Advanced Documentation
-** "Hot Deploy Feature":http://wiki.github.com/topolik/extlet/hot-deploy-feature
-** "How the Extlet Works":http://wiki.github.com/topolik/extlet/how-the-extlet-works
-** "Source Codes":http://wiki.github.com/topolik/extlet/source-codes
+** "Hot Deploy Feature":https://wiki.github.com/topolik/extlet/hot-deploy-feature
+** "How the Extlet Works":https://wiki.github.com/topolik/extlet/how-the-extlet-works
+** "Source Codes":https://wiki.github.com/topolik/extlet/source-codes
 
 h2. Future
 
-* Implement support for the rest of the configuration files (see "Extlet Configuration Files":http://wiki.github.com/topolik/extlet/extlet-configuration-files)
+* Implement support for the rest of the configuration files (see "Extlet Configuration Files":https://wiki.github.com/topolik/extlet/extlet-configuration-files)
 * Enrich the Liferay using extension points for developers to easily change Liferay core behaviour
 * Support for the Liferay 6
 * Support for the Glassfish (and other app. servers?)
-* Migrate the Extlet into the Liferay Ext Plugin - "LPS-9442":http://issues.liferay.com/browse/LPS-9442
+* Migrate the Extlet into the Liferay Ext Plugin - "LPS-9442":https://issues.liferay.com/browse/LPS-9442
